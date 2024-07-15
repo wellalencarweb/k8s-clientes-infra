@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clientes-deployment
+  labels:
+    app: clientes-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clientes-deployment
+  template:
+    metadata:
+      labels:
+        app: clientes-deployment
+    spec:
+      containers:
+        - name: app
+          image: deiro1/app-fast-food-clientes:latest
+          command: ["sh", "-c", "npm run generate && npm run migrate && npm run start"]
+          ports:
+            - containerPort: 6001
+          resources:
+            requests:
+              cpu: 333m
+            limits:
+              cpu: 999m
+          env:
+            - name: NODE_ENV
+              valueFrom:
+                secretKeyRef:
+                  name: secret-clientes
+                  key: NODE_ENV
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: secret-clientes
+                  key: POSTGRES_DB
+            - name: POSTGRES_DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: secret-clientes
+                  key: POSTGRES_DB_HOST                  
+            - name: POSTGRES_DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: secret-clientes
+                  key: POSTGRES_DB_PORT
+            - name: POSTGRES_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: secret-clientes
+                  key: POSTGRES_DB_USER
+            - name: POSTGRES_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-clientes
+                  key: POSTGRES_DB_PASSWORD                  
+            - name: SQS_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: secret-clientes
+                  key: SQS_REGION                  
+            - name: SQS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: secret-clientes
+                  key: SQS_ACCESS_KEY_ID                  
+            - name: SQS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-clientes
+                  key: SQS_SECRET_ACCESS_KEY                  
+            - name: QUEUE_ANONIMIZACAO_CLIENTE
+              valueFrom:
+                secretKeyRef:
+                  name: secret-clientes
+                  key: QUEUE_ANONIMIZACAO_CLIENTE                  

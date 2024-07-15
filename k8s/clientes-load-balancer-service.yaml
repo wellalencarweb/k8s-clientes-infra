@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: clientes-load-balancer
+  name: clientes-load-balancer
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 6001
+  selector:
+    app: clientes-deployment
+  type: LoadBalancer

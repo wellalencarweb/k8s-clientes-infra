@@ -1,2 +1,2 @@
-# k8s-clientes-infra
-Gerenciar os recursos de Kubernetes específicos para o serviço de clientes.
+# infra-k8s-resources (Clientes)
+Repositório para administrar os recursos Kubernetes do projeto Tech Challenge.
